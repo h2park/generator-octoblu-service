@@ -1,6 +1,11 @@
 language: node_js
 node_js:
-  - '0.10'
-before_install:
-  - currentfolder=${PWD##*/}
-  - if [ "$currentfolder" != 'generator-octoblu-service' ]; then cd .. && eval "mv $currentfolder generator-octoblu-service" && cd generator-octoblu-service; fi
+- '5'
+deploy:
+  provider: npm
+  email: serveradmin@octoblu.com
+  api_key:
+    secure: K3KnSrPHAXRjcx0BmTIOHl9W9qxaWiaxWXOWgSsWUE5NA4buxPorIvFwuxstIKwVBbz5m3W6fvdqjFxeynHNkX9eTykOBiWN0q32R/8gBv5q/70xHN/zPnDj7CRguVARIXQ8Q9SBLAKldESKo4197EzWH1BaNQtBZ0wKP00xRLFmOQ36judxZID/+R+ouZi2nlHfBgg4wCbidMNM7gn34NFi2IpRYIO2w0N/+wqME3YhEcBbW/WIwqmZtE3jqeoLOBTIi9zVsMhlCVgjELPFeqYMPzewN+6nhyCsxvodufAO7KcaOSe0Y8a0HJqBlVytOjGbxIeDyEN+AmkNTlT1lJWxvB38SldBrfjJ27M5U1bTx0+fHLm1M7aFQ627wDyLI2KOwePvgB7j312+7NjVu7fB7Ef3q/xALGHbne9jeB8OCyLiCJLOuxEy9sc64oNbwVYJRq911rL13435KpqSCqOuM+j/+hhKvh5Um34y8PLN5CD0Gf2UAyZ632fBh9IZqaX4sGCno6gML503RygbE/ctI2/RsH60Dxb90VtYGTZNfWhLwRDCPLoCoBfcwBhvVqYtOLBeXhLHkCyV6HyFksY+gZm6mI4RZ5VtbXmH2K9uR1vi6azdSVxizT/r5XcqS4+vABIgGYS7zVlL7r0mOL4czJJhS+kYzdd0BH/44u8=
+  on:
+    tags: true
+    branches: true
