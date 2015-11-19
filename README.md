@@ -1,8 +1,8 @@
 # generator-octoblu-service
 
-[![Dependency status](http://img.shields.io/david/iamruinous/generator-octoblu-service.svg?style=flat)](https://david-dm.org/iamruinous/generator-octoblu-service)
-[![devDependency Status](http://img.shields.io/david/dev/iamruinous/generator-octoblu-service.svg?style=flat)](https://david-dm.org/iamruinous/generator-octoblu-service#info=devDependencies)
-[![Build Status](http://img.shields.io/travis/iamruinous/generator-octoblu-service.svg?style=flat&branch=master)](https://travis-ci.org/iamruinous/generator-octoblu-service)
+[![Dependency status](http://img.shields.io/david/octoblu/generator-octoblu-service.svg?style=flat)](https://david-dm.org/octoblu/generator-octoblu-service)
+[![devDependency Status](http://img.shields.io/david/dev/octoblu/generator-octoblu-service.svg?style=flat)](https://david-dm.org/octoblu/generator-octoblu-service#info=devDependencies)
+[![Build Status](http://img.shields.io/travis/octoblu/generator-octoblu-service.svg?style=flat&branch=master)](https://travis-ci.org/octoblu/generator-octoblu-service)
 
 [![NPM](https://nodei.co/npm/generator-octoblu-service.svg?style=flat)](https://npmjs.org/package/generator-octoblu-service)
 

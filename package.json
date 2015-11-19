@@ -1,20 +1,20 @@
 {
   "name": "generator-octoblu-service",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A generator for Yeoman",
   "keywords": [
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/iamruinous/generator-octoblu-service",
-  "bugs": "https://github.com/iamruinous/generator-octoblu-service/issues",
+  "homepage": "https://github.com/octoblu/generator-octoblu-service",
+  "bugs": "https://github.com/octoblu/generator-octoblu-service/issues",
   "author": {
-    "name": "Jade Meskill",
-    "url": "https://github.com/iamruinous"
+    "name": "Octoblu",
+    "url": "https://github.com/octoblu"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamruinous/generator-octoblu-service.git"
+    "url": "https://github.com/octoblu/generator-octoblu-service.git"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.spec.coffee"
