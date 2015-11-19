@@ -57,6 +57,7 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     @template '_package.json', 'package.json'
     @template 'src/_server.coffee', 'src/server.coffee'
     @template 'src/_router.coffee', 'src/router.coffee'
+    @template 'test/integration/_sample-integration-spec.coffee', 'test/integration/sample-integration.coffee'
     @template '_server.js', 'server.js'
     @template '_travis.yml', '.travis.yml'
     @template 'README.md'
