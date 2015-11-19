@@ -34,6 +34,19 @@ To install generator-octoblu-service from npm, run:
 $ npm install -g generator-octoblu-service
 ```
 
+Create your project directory:
+
+```
+$ mkdir my-project
+```
+
+Navigate to your project directory:
+
+```
+$ cd my-project
+```
+
+
 Finally, initiate the generator:
 
 ```
