@@ -1,15 +1,15 @@
-# generator-octoblu-service
+# <%= (appname) %>
 
-[![Dependency status](http://img.shields.io/david/octoblu/generator-octoblu-service.svg?style=flat)](https://david-dm.org/octoblu/generator-octoblu-service)
-[![devDependency Status](http://img.shields.io/david/dev/octoblu/generator-octoblu-service.svg?style=flat)](https://david-dm.org/octoblu/generator-octoblu-service#info=devDependencies)
-[![Build Status](http://img.shields.io/travis/octoblu/generator-octoblu-service.svg?style=flat&branch=master)](https://travis-ci.org/octoblu/generator-octoblu-service)
+[![Dependency status](http://img.shields.io/david/octoblu/<%= _.slugify(appname) %>.svg?style=flat)](https://david-dm.org/octoblu/<%= _.slugify(appname) %>)
+[![devDependency Status](http://img.shields.io/david/dev/octoblu/<%= _.slugify(appname) %>.svg?style=flat)](https://david-dm.org/octoblu/<%= _.slugify(appname) %>#info=devDependencies)
+[![Build Status](http://img.shields.io/travis/octoblu/<%= _.slugify(appname) %>.svg?style=flat&branch=master)](https://travis-ci.org/octoblu/<%= _.slugify(appname) %>)
 
-[![NPM](https://nodei.co/npm/generator-octoblu-service.svg?style=flat)](https://npmjs.org/package/generator-octoblu-service)
+[![NPM](https://nodei.co/npm/<%= _.slugify(appname) %>.svg?style=flat)](https://npmjs.org/package/<%= _.slugify(appname) %>)
 
 ## Installing
 
 ```bash
-$ npm install generator-octoblu-service
+$ npm install <%= _.slugify(appname) %>
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ console.log('hello world!');
 
 The MIT License (MIT)
 
-Copyright 2015 Jade Meskill
+Copyright 2015 Octoblu Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
