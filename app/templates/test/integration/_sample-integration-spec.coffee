@@ -30,7 +30,7 @@ describe 'POST /some/route', ->
       username: 'team-uuid'
       password: 'team-token'
 
-    device:
+    device =
       uuid: 'some-device-uuid'
       foo: 'bar'
 
