@@ -15,8 +15,14 @@ describe 'POST /some/route', ->
       server: 'localhost'
       port: 0xd00d
 
-    @server = new Server
-      port: undefined, {meshbluConfig: meshbluConfig}
+    serverOptions =
+      port: undefined,
+      disableLogging: true
+
+    controllerOptions =
+      meshbluConfig: meshbluConfig
+      
+    @server = new Server serverOptions, controllerOptions
 
     @server.run =>
       @serverPort = @server.address().port

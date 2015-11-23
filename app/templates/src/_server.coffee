@@ -8,14 +8,14 @@ debug              = require('debug')('<%= _.slugify(appname) %>:server')
 Router             = require './router'
 
 class Server
-  constructor: ({@port})->
+  constructor: ({@port, @disableLogging}, @controllerOptions)->
 
   address: =>
     @server.address()
 
   run: (callback) =>
     app = express()
-    app.use morgan('dev', immediate: false)
+    app.use morgan 'dev', immediate: false unless @disableLogging
     app.use cors()
     app.use errorHandler()
     app.use meshbluHealthcheck()
@@ -24,7 +24,7 @@ class Server
 
     app.options '*', cors()
 
-    router = new Router
+    router = new Router @controllerOptions
     router.route app
 
     @server = app.listen @port, callback
