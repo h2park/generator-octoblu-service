@@ -1,7 +1,7 @@
 class Router
-  constructor: (controllerOptions) ->
+  constructor: (options) ->
 
   route: (app) =>
-    # e.g. app.put '/root/customers/:id', customersController.update
+    # e.g. app.put '/resource/:id', someController.update
 
 module.exports = Router

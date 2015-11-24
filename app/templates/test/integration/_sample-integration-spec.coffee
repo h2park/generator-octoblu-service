@@ -1,7 +1,7 @@
-http = require 'http'
+http    = require 'http'
 request = require 'request'
-shmock = require 'shmock'
-Server = require '../../src/server'
+shmock  = require 'shmock'
+Server  = require '../../src/server'
 
 describe 'POST /some/route', ->
   beforeEach ->
@@ -18,11 +18,9 @@ describe 'POST /some/route', ->
     serverOptions =
       port: undefined,
       disableLogging: true
-
-    controllerOptions =
       meshbluConfig: meshbluConfig
-      
-    @server = new Server serverOptions, controllerOptions
+
+    @server = new Server serverOptions
 
     @server.run =>
       @serverPort = @server.address().port
@@ -51,8 +49,8 @@ describe 'POST /some/route', ->
       .send(foo: 'bar')
       .reply(204, http.STATUS_CODES[204])
 
-    request.post "http://localhost:#{@serverPort}/some/route", options, (@error, @response, @body) =>
-      done @error
+    request.post "http://localhost:#{@serverPort}/some/route", options, (error, @response, @body) =>
+      done error
 
   it 'should update the real device in meshblu', ->
     expect(@response.statusCode).to.equal 204

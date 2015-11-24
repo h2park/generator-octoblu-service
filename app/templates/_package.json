@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Put some description here",
   "keywords": [
-    "cool",
-    "module"
   ],
   "homepage": "<%= githubUrl %>/<%= _.slugify(appname) %>",
   "bugs": "<%= githubUrl %>/<%= _.slugify(appname) %>/issues",
@@ -12,12 +10,13 @@
     "name": "<%= realname %>",
     "url": "<%= githubUrl %>"
   },
-  "main": "server.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "<%= githubUrl %>/<%= _.slugify(appname) %>.git"
   },
   "scripts": {
+    "start": "node command.js",
     "test": "./node_modules/.bin/mocha test/*.spec.coffee"
   },
   "devDependencies": {

@@ -21,6 +21,12 @@ describe 'app', ->
 
   it 'creates expected files', ->
     helpers.assertFile '''
+      Dockerfile
+      src/server.coffee
+      src/router.coffee
+      index.js
+      command.js
+      command.coffee
       .gitignore
       .travis.yml
       LICENSE

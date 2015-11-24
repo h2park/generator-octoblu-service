@@ -8,7 +8,9 @@ debug              = require('debug')('<%= _.slugify(appname) %>:server')
 Router             = require './router'
 
 class Server
-  constructor: ({@port, @disableLogging}, @controllerOptions)->
+  constructor: (options)->
+    {@disableLogging, @port} = options
+    {@meshbluConfig} = options
 
   address: =>
     @server.address()
@@ -24,7 +26,8 @@ class Server
 
     app.options '*', cors()
 
-    router = new Router @controllerOptions
+    router = new Router
+      meshbluConfig: @meshbluConfig
     router.route app
 
     @server = app.listen @port, callback
