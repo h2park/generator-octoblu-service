@@ -3,55 +3,57 @@ request = require 'request'
 shmock  = require '@octoblu/shmock'
 Server  = require '../../src/server'
 
-describe 'POST /some/route', ->
-  beforeEach ->
+describe 'Sample Integration', ->
+  beforeEach (done) ->
     @meshblu = shmock 0xd00d
 
-  afterEach (done) ->
-    @meshblu.close => done()
-
-  beforeEach (done) ->
-    meshbluConfig =
-      server: 'localhost'
-      port: 0xd00d
-
-    serverOptions =
+    @server = new Server serverOptions
       port: undefined,
       disableLogging: true
-      meshbluConfig: meshbluConfig
-
-    @server = new Server serverOptions
+      meshbluConfig:
+        server: 'localhost'
+        port: 0xd00d
 
     @server.run =>
       @serverPort = @server.address().port
       done()
 
   afterEach (done) ->
-    @server.stop => done()
+    @server.stop done
 
-  beforeEach (done) ->
-    auth =
-      username: 'team-uuid'
-      password: 'team-token'
+  afterEach (done) ->
+    @meshblu.close done
 
-    device =
-      uuid: 'some-device-uuid'
-      foo: 'bar'
+  describe 'On POST /some/route' ->
+    beforeEach (done) ->
+      userAuth = new Buffer('user-uuid:user-token').toString 'base64'
 
-    options =
-      auth: auth
-      json: device
+      @meshblu
+        .get '/v2/whoami'
+        .set 'Authorization', "Basic #{userAuth}"
+        .reply 200, uuid: 'user-uuid', token: 'user-token'
 
-    @meshblu.get('/v2/whoami')
-      .reply(200, '{"uuid": "team-uuid"}')
+      @updateMeshbluDevice = @meshblu
+        .patch '/v2/devices/some-device-uuid'
+        .set 'Authorization', "Basic #{userAuth}"
+        .send foo: 'bar'
+        .reply 204
 
-    @patchHandler = @meshblu.patch('/v2/devices/some-device-uuid')
-      .send(foo: 'bar')
-      .reply(204, http.STATUS_CODES[204])
+      options =
+        uri: '/some/route'
+        baseUrl: "http://localhost:#{@serverPort}"
+        auth:
+          username: 'team-uuid'
+          password: 'team-token'
+        json:
+          uuid: 'some-device-uuid'
+          foo: 'bar'
 
-    request.post "http://localhost:#{@serverPort}/some/route", options, (error, @response, @body) =>
-      done error
+      request.post options, (error, @response, @body) =>
+        done error
 
-  it 'should update the real device in meshblu', ->
-    expect(@response.statusCode).to.equal 204
-    expect(@patchHandler.isDone).to.be.true
+    it 'should update the real device in meshblu', ->
+      expect(@updateMeshbluDevice.isDone).to.be.true
+
+    it 'should return a 204', ->
+      expect(@response.statusCode).to.equal 204
