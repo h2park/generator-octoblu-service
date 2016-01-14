@@ -2,7 +2,8 @@ class Controller
   constructor: ({@service}) ->
 
   hello: (request, response) =>
-    @service.doHello (error) =>
+    {hasError} = request.query
+    @service.doHello {hasError}, (error) =>
       return response.status(error.code || 500).send(error: error.message) if error?
       response.sendStatus(200)
 

@@ -8,6 +8,7 @@ meshbluAuth        = require 'express-meshblu-auth'
 MeshbluConfig      = require 'meshblu-config'
 debug              = require('debug')('<%= _.slugify(appname) %>:server')
 Router             = require './router'
+Service            = require './services/service'
 
 class Server
   constructor: ({@disableLogging, @port}, {@meshbluConfig})->
@@ -28,7 +29,9 @@ class Server
 
     app.options '*', cors()
 
-    router = new Router {@meshbluConfig}
+    service = new Service
+    router = new Router {@meshbluConfig, service}
+
     router.route app
 
     @server = app.listen @port, callback

@@ -1,5 +1,6 @@
 class ServiceClass
-  doHello: (callback) =>
+  doHello: ({hasError}, callback) =>
+    return callback @_createError(755, 'Not enough dancing!') if hasError?
     callback()
 
   _createError: (code, message) =>
