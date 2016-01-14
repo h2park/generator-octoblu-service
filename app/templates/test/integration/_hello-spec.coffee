@@ -3,7 +3,7 @@ request = require 'request'
 shmock  = require '@octoblu/shmock'
 Server  = require '../../src/server'
 
-xdescribe 'Sample Integration', ->
+describe 'Hello', ->
   beforeEach (done) ->
     @meshblu = shmock 0xd00d
 
@@ -27,39 +27,28 @@ xdescribe 'Sample Integration', ->
   afterEach (done) ->
     @meshblu.close done
 
-  describe 'On POST /some/route', ->
+  describe 'On GET /hello', ->
     beforeEach (done) ->
-      userAuth = new Buffer('user-uuid:user-token').toString 'base64'
+      userAuth = new Buffer('some-uuid:some-token').toString 'base64'
 
-      @meshblu
+      @authDevice = @meshblu
         .get '/v2/whoami'
         .set 'Authorization', "Basic #{userAuth}"
-        .reply 200, uuid: 'user-uuid', token: 'user-token'
-
-      @updateMeshbluDevice = @meshblu
-        .patch '/v2/devices/some-device-uuid'
-        .set 'Authorization', "Basic #{userAuth}"
-        .send foo: 'bar'
-        .reply 204
+        .reply 200, uuid: 'some-uuid', token: 'some-token'
 
       options =
-        uri: '/some/route'
+        uri: '/hello'
         baseUrl: "http://localhost:#{@serverPort}"
         auth:
-          username: 'user-uuid'
-          password: 'user-token'
-        json:
-          uuid: 'some-device-uuid'
-          foo: 'bar'
+          username: 'some-uuid'
+          password: 'some-token'
+        json: true
 
-      request.post options, (error, @response, @body) =>
+      request.get options, (error, @response, @body) =>
         done error
 
     it 'should auth handler', ->
       @authDevice.done()
 
-    it 'should update the real device in meshblu', ->
-      expect(@updateMeshbluDevice.isDone).to.be.true
-
-    it 'should return a 204', ->
-      expect(@response.statusCode).to.equal 204
+    it 'should return a 200', ->
+      expect(@response.statusCode).to.equal 200

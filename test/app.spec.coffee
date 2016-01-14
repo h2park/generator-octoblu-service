@@ -24,6 +24,8 @@ describe 'app', ->
       Dockerfile
       src/server.coffee
       src/router.coffee
+      src/controllers/controller.coffee
+      src/services/service.coffee
       index.js
       command.js
       command.coffee
