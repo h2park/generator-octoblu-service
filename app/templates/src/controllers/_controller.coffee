@@ -1,10 +1,10 @@
-class Controller
-  constructor: ({@service}) ->
+class <%= classPrefix %>Controller
+  constructor: ({@<%= instancePrefix %>Service}) ->
 
   hello: (request, response) =>
     {hasError} = request.query
-    @service.doHello {hasError}, (error) =>
+    @<%= instancePrefix %>Service.doHello {hasError}, (error) =>
       return response.status(error.code || 500).send(error: error.message) if error?
       response.sendStatus(200)
 
-module.exports = Controller
+module.exports = <%= classPrefix %>Controller

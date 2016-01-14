@@ -56,9 +56,11 @@ class OctobluServiceGenerator extends yeoman.generators.Base
 
   projectfiles: ->
     filePrefix = _.kebabCase @generatorName
-    classPrefix = _.upperFirst _.camelCase @generatorName
+    instancePrefix = _.camelCase @generatorName
+    classPrefix = _.upperFirst instancePrefix
 
-    context = {filePrefix, classPrefix, @githubUrl, @realname, @appname}
+
+    context = {filePrefix, classPrefix, instancePrefix, @githubUrl, @realname, @appname}
     @template "_package.json", "package.json", context
     @template "src/_server.coffee", "src/server.coffee", context
     @template "src/_router.coffee", "src/router.coffee", context
