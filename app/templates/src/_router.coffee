@@ -1,4 +1,4 @@
-Controller = require './controllers/controller'
+Controller = require './controllers/<%= filePrefix %>-controller'
 
 class Router
   constructor: ({@service}) ->

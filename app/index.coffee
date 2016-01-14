@@ -1,8 +1,9 @@
-util = require 'util'
-path = require 'path'
-url = require 'url'
+util      = require 'util'
+path      = require 'path'
+url       = require 'url'
 GitHubApi = require 'github'
-yeoman = require 'yeoman-generator'
+yeoman    = require 'yeoman-generator'
+_         = require 'lodash'
 
 extractGeneratorName = (_, appname) ->
   _.slugify appname
@@ -54,23 +55,27 @@ class OctobluServiceGenerator extends yeoman.generators.Base
       done()
 
   projectfiles: ->
-    @template '_package.json', 'package.json'
-    @template 'src/_server.coffee', 'src/server.coffee'
-    @template 'src/_router.coffee', 'src/router.coffee'
-    @template 'src/services/_service.coffee', 'src/services/service.coffee'
-    @template 'src/controllers/_controller.coffee', 'src/controllers/controller.coffee'
-    @template 'test/_mocha.opts', 'test/mocha.opts'
-    @template 'test/_test_helper.coffee', 'test/_test_helper.coffee'
-    @template 'test/integration/_sample-integration-spec.coffee', 'test/integration/sample-integration-spec.coffee'
-    @template 'test/integration/_hello-spec.coffee', 'test/integration/hello-spec.coffee'
-    @template '_index.js', 'index.js'
-    @template '_command.js', 'command.js'
-    @template '_command.coffee', 'command.coffee'
-    @template '_travis.yml', '.travis.yml'
-    @template '_Dockerfile', 'Dockerfile'
-    @template '_dockerignore', '.dockerignore'
-    @template 'README.md'
-    @template 'LICENSE'
+    filePrefix = _.kebabCase @generatorName
+    classPrefix = _.upperFirst _.camelCase @generatorName
+
+    context = {filePrefix, classPrefix, @githubUrl, @realname, @appname}
+    @template "_package.json", "package.json", context
+    @template "src/_server.coffee", "src/server.coffee", context
+    @template "src/_router.coffee", "src/router.coffee", context
+    @template "src/services/_service.coffee", "src/services/#{filePrefix}-service.coffee", context
+    @template "src/controllers/_controller.coffee", "src/controllers/#{filePrefix}-controller.coffee", context
+    @template "test/_mocha.opts", "test/mocha.opts", context
+    @template "test/_test_helper.coffee", "test/test_helper.coffee", context
+    @template "test/integration/_sample-integration-spec.coffee", "test/integration/#{filePrefix}-integration-spec.coffee", context
+    @template "test/integration/_hello-spec.coffee", "test/integration/#{filePrefix}-hello-spec.coffee", context
+    @template "_index.js", "index.js", context
+    @template "_command.js", "command.js", context
+    @template "_command.coffee", "command.coffee", context
+    @template "_travis.yml", ".travis.yml", context
+    @template "_Dockerfile", "Dockerfile", context
+    @template "_dockerignore", ".dockerignore", context
+    @template "README.md", "README.md", context
+    @template "LICENSE", "LICENSE", context
 
   gitfiles: ->
     @copy '_gitignore', '.gitignore'

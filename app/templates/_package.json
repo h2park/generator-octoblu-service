@@ -1,11 +1,11 @@
 {
-  "name": "<%= _.slugify(appname) %>",
+  "name": "<%= filePrefix %>",
   "version": "1.0.0",
   "description": "Put some description here",
   "keywords": [
   ],
-  "homepage": "<%= githubUrl %>/<%= _.slugify(appname) %>",
-  "bugs": "<%= githubUrl %>/<%= _.slugify(appname) %>/issues",
+  "homepage": "<%= githubUrl %>/<%= filePrefix %>",
+  "bugs": "<%= githubUrl %>/<%= filePrefix %>/issues",
   "author": {
     "name": "<%= realname %>",
     "url": "<%= githubUrl %>"
@@ -13,7 +13,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "<%= githubUrl %>/<%= _.slugify(appname) %>.git"
+    "url": "<%= githubUrl %>/<%= filePrefix %>.git"
   },
   "scripts": {
     "start": "node command.js",
