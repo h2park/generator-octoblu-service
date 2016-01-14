@@ -1,11 +1,11 @@
-<%= classPrefix %>Controller = require './controllers/<%= filePrefix %>-controller'
+<%= controllerClass %> = require './controllers/<%= filePrefix %>-controller'
 
 class Router
-  constructor: ({@<%= instancePrefix %>Service}) ->
+  constructor: ({@<%= serviceInstance %>}) ->
   route: (app) =>
-    <%= instancePrefix %>Controller = new <%= classPrefix %>Controller {@<%= instancePrefix %>Service}
+    <%= controllerInstance %> = new <%= controllerClass %> {@<%= serviceInstance %>}
 
-    app.get '/hello', <%= instancePrefix %>Controller.hello
+    app.get '/hello', <%= controllerInstance %>.hello
     # e.g. app.put '/resource/:id', someController.update
 
 module.exports = Router

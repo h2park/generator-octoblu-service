@@ -5,8 +5,8 @@ GitHubApi = require 'github'
 yeoman    = require 'yeoman-generator'
 _         = require 'lodash'
 
-extractGeneratorName = (_, appname) ->
-  _.slugify appname
+extractGeneratorName = (__, appname) ->
+  _.kebabCase appname
 
 githubUserInfo = (name, cb) ->
   github = new GitHubApi version: '3.0.0'
@@ -40,7 +40,6 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     @prompt prompts, (props) =>
       @githubUser = props.githubUser
       @generatorName = props.generatorName
-      @appname = @generatorName
       done()
 
   userInfo: ->
@@ -55,12 +54,19 @@ class OctobluServiceGenerator extends yeoman.generators.Base
       done()
 
   projectfiles: ->
-    filePrefix = _.kebabCase @generatorName
-    instancePrefix = _.camelCase @generatorName
+    appName = _.kebabCase @generatorName
+    generatorNameWithoutService = _.trimEnd @generatorName, '-service'
+    filePrefix = _.kebabCase generatorNameWithoutService
+    instancePrefix = _.camelCase generatorNameWithoutService
     classPrefix = _.upperFirst instancePrefix
 
+    serviceClass    = "#{classPrefix}Service"
+    serviceInstance = "#{instancePrefix}Service"
 
-    context = {filePrefix, classPrefix, instancePrefix, @githubUrl, @realname, @appname}
+    controllerClass = "#{classPrefix}Controller"
+    controllerInstance = "#{instancePrefix}Controller"
+
+    context = {filePrefix, serviceClass, serviceInstance, controllerClass, controllerInstance, appName, @githubUrl, @realname}
     @template "_package.json", "package.json", context
     @template "src/_server.coffee", "src/server.coffee", context
     @template "src/_router.coffee", "src/router.coffee", context

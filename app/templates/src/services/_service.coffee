@@ -1,4 +1,4 @@
-class <%= classPrefix %>Service
+class <%= serviceClass %>
   doHello: ({hasError}, callback) =>
     return callback @_createError(755, 'Not enough dancing!') if hasError?
     callback()
@@ -8,4 +8,4 @@ class <%= classPrefix %>Service
     error.code = code if code?
     return error
 
-module.exports = <%= classPrefix %>Service
+module.exports = <%= serviceClass %>

@@ -6,9 +6,9 @@ errorHandler       = require 'errorhandler'
 meshbluHealthcheck = require 'express-meshblu-healthcheck'
 meshbluAuth        = require 'express-meshblu-auth'
 MeshbluConfig      = require 'meshblu-config'
-debug              = require('debug')('<%= _.slugify(appname) %>:server')
+debug              = require('debug')('<%= appName %>:server')
 Router             = require './router'
-<%= classPrefix %>Service            = require './services/<%= filePrefix %>-service'
+<%= serviceClass %> = require './services/<%= filePrefix %>-service'
 
 class Server
   constructor: ({@disableLogging, @port}, {@meshbluConfig})->
@@ -29,8 +29,8 @@ class Server
 
     app.options '*', cors()
 
-    <%= instancePrefix %>Service = new <%= classPrefix %>Service
-    router = new Router {@meshbluConfig, <%= instancePrefix %>Service}
+    <%= serviceInstance %> = new <%= serviceClass %>
+    router = new Router {@meshbluConfig, <%= serviceInstance %>}
 
     router.route app
 
