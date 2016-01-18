@@ -5,7 +5,6 @@ Server        = require './src/server'
 class Command
   constructor: ->
     @serverOptions =
-      meshbluConfig:  new MeshbluConfig().toJSON()
       port:           process.env.PORT || 80
       disableLogging: process.env.DISABLE_LOGGING == "true"
 
@@ -17,7 +16,7 @@ class Command
     # Use this to require env
     # @panic new Error('Missing required environment variable: ENV_NAME') if _.isEmpty @serverOptions.envName
 
-    server = new Server @serverOptions
+    server = new Server @serverOptions, {meshbluConfig:  new MeshbluConfig().toJSON()}
     server.run (error) =>
       return @panic error if error?
 
