@@ -2,6 +2,7 @@
 
 class Router
   constructor: ({@<%= serviceInstance %>}) ->
+
   route: (app) =>
     <%= controllerInstance %> = new <%= controllerClass %> {@<%= serviceInstance %>}
 

@@ -1,6 +1,6 @@
 {
   "name": "generator-octoblu-service",
-  "version": "3.3.2",
+  "version": "4.0.0",
   "description": "A generator for Yeoman",
   "keywords": [
     "yeoman-generator"
@@ -28,9 +28,6 @@
   "devDependencies": {
     "mocha": "^1.18.2",
     "rimraf": "^2.2.8"
-  },
-  "peerDependencies": {
-    "yo": "^1.0.0"
   },
   "engines": {
     "node": ">=0.8.0",

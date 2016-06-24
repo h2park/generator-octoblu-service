@@ -1,38 +1,37 @@
-http    = require 'http'
-request = require 'request'
-shmock  = require '@octoblu/shmock'
-Server  = require '../../src/server'
+http          = require 'http'
+request       = require 'request'
+enableDestroy = require 'server-destroy'
+shmock        = require '@octoblu/shmock'
+Server        = require '../../src/server'
 
 describe 'Hello', ->
   beforeEach (done) ->
     @meshblu = shmock 0xd00d
+    enableDestroy @meshblu
 
     serverOptions =
       port: undefined,
       disableLogging: true
+      meshbluConfig:
+        server: 'localhost'
+        port: 0xd00d
 
-    meshbluConfig =
-      server: 'localhost'
-      port: 0xd00d
-
-    @server = new Server serverOptions, {meshbluConfig}
+    @server = new Server serverOptions
 
     @server.run =>
       @serverPort = @server.address().port
       done()
 
-  afterEach (done) ->
-    @server.stop done
-
-  afterEach (done) ->
-    @meshblu.close done
+  afterEach ->
+    @meshblu.destroy()
+    @server.destroy()
 
   describe 'On GET /hello', ->
     beforeEach (done) ->
       userAuth = new Buffer('some-uuid:some-token').toString 'base64'
 
       @authDevice = @meshblu
-        .get '/v2/whoami'
+        .post '/authenticate'
         .set 'Authorization', "Basic #{userAuth}"
         .reply 200, uuid: 'some-uuid', token: 'some-token'
 
@@ -47,18 +46,18 @@ describe 'Hello', ->
       request.get options, (error, @response, @body) =>
         done error
 
-    it 'should auth handler', ->
-      @authDevice.done()
-
     it 'should return a 200', ->
       expect(@response.statusCode).to.equal 200
+
+    it 'should auth handler', ->
+      @authDevice.done()
 
   describe 'when the service yields an error', ->
     beforeEach (done) ->
       userAuth = new Buffer('some-uuid:some-token').toString 'base64'
 
       @authDevice = @meshblu
-        .get '/v2/whoami'
+        .post '/authenticate'
         .set 'Authorization', "Basic #{userAuth}"
         .reply 200, uuid: 'some-uuid', token: 'some-token'
 
@@ -75,8 +74,6 @@ describe 'Hello', ->
       request.get options, (error, @response, @body) =>
         done error
 
-    it 'should auth handler', ->
-      @authDevice.done()
-
-    it 'should return a 755 because ya', ->
+    it 'should auth and response with 755', ->
       expect(@response.statusCode).to.equal 755
+      @authDevice.done()

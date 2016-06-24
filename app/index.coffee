@@ -30,7 +30,7 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     prompts = [
       name: 'githubUser'
       message: 'Would you mind telling me your username on GitHub?'
-      default: 'someuser'
+      default: 'octoblu'
     ,
       name: 'generatorName'
       message: 'What\'s the base name of your generator?'
@@ -55,7 +55,7 @@ class OctobluServiceGenerator extends yeoman.generators.Base
 
   projectfiles: ->
     appName = _.kebabCase @generatorName
-    generatorNameWithoutService = _.trimEnd @generatorName, '-service'
+    generatorNameWithoutService = @generatorName.replace(/\-service$/, '')
     filePrefix = _.kebabCase generatorNameWithoutService
     instancePrefix = _.camelCase generatorNameWithoutService
     classPrefix = _.upperFirst instancePrefix
