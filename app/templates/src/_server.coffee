@@ -4,9 +4,10 @@ express            = require 'express'
 bodyParser         = require 'body-parser'
 errorHandler       = require 'errorhandler'
 enableDestroy      = require 'server-destroy'
-SendError          = require 'express-send-error'
 MeshbluAuth        = require 'express-meshblu-auth'
 meshbluHealthcheck = require 'express-meshblu-healthcheck'
+packageVersion     = require 'express-package-version'
+sendError          = require 'express-send-error'
 Router             = require './router'
 <%= serviceClass %> = require './services/<%= filePrefix %>-service'
 debug              = require('debug')('<%= appName %>:server')
@@ -19,8 +20,9 @@ class Server
 
   run: (callback) =>
     app = express()
-    app.use SendError()
+    app.use sendError()
     app.use meshbluHealthcheck()
+    app.use packageVersion()
     app.use morgan 'dev', immediate: false unless @disableLogging
     app.use cors()
     app.use errorHandler()

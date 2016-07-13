@@ -38,6 +38,7 @@
     "express": "^4.14.0",
     "express-meshblu-healthcheck": "^1.0.1",
     "express-meshblu-auth": "^6.0.0",
+    "express-package-version": "^0.0.2",
     "express-send-error": "^v1.0.0",
     "lodash": "^4.13.1",
     "meshblu-config": "^5.1.1",
