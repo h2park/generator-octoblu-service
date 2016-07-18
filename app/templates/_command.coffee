@@ -1,4 +1,5 @@
 _             = require 'lodash'
+OctobluRaven  = require 'octoblu-raven'
 MeshbluConfig = require 'meshblu-config'
 Server        = require './src/server'
 
@@ -8,6 +9,10 @@ class Command
       meshbluConfig:  new MeshbluConfig().toJSON()
       port:           process.env.PORT || 80
       disableLogging: process.env.DISABLE_LOGGING == "true"
+      octobluRaven:   new OctobluRaven()
+
+  handleErrors: =>
+    @serverOptions.octobluRaven.worker().handleErrors()
 
   panic: (error) =>
     console.error error.stack
@@ -26,8 +31,9 @@ class Command
 
     process.on 'SIGTERM', =>
       console.log 'SIGTERM caught, exiting'
-      server.destroy()
-      process.exit 0
+      server.stop =>
+        process.exit 0
 
 command = new Command()
+command.handleErrors()
 command.run()

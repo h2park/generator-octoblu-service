@@ -1,31 +1,34 @@
-path = require 'path'
-fs = require 'fs'
-{exec} = require 'child_process'
-helpers = require('yeoman-generator').test
+path    = require 'path'
+helpers = require 'yeoman-test'
+assert  = require 'yeoman-assert'
 
 GENERATOR_NAME = 'app'
 DEST = path.join __dirname, '..', 'temp', "generator-#{GENERATOR_NAME}"
 
-describe 'app', ->
+describe 'GeneratorOctobluService', ->
   before (done) ->
     helpers
       .run path.join __dirname, '..', 'app'
       .inDir DEST
       .withOptions
-        realname: 'Alex Gorbatchev'
-        githubUrl: 'https://github.com/alexgorbatchev'
-      .withPrompt
-        githubUser: 'alexgorbatchev'
+        realname: 'Sqrt of Saturn'
+        githubUrl: 'https://github.com/sqrtofsaturn'
+      .withPrompts
+        githubUser: 'sqrtofsaturn'
         generatorName: GENERATOR_NAME
       .on 'end', done
 
   it 'creates expected files', ->
-    helpers.assertFile '''
+    assert.file '''
+      .dockerignore
       Dockerfile
       src/server.coffee
       src/router.coffee
       src/controllers/app-controller.coffee
       src/services/app-service.coffee
+      test/mocha.opts
+      test/test_helper.coffee
+      .gitignore
       index.js
       command.js
       command.coffee

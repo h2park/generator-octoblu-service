@@ -56,6 +56,7 @@ class OctobluServiceGenerator extends yeoman.generators.Base
   projectfiles: ->
     appName = _.kebabCase @generatorName
     generatorNameWithoutService = @generatorName.replace(/\-service$/, '')
+    fullFilePrefix = _.kebabCase @generatorName
     filePrefix = _.kebabCase generatorNameWithoutService
     instancePrefix = _.camelCase generatorNameWithoutService
     classPrefix = _.upperFirst instancePrefix
@@ -66,7 +67,17 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     controllerClass = "#{classPrefix}Controller"
     controllerInstance = "#{instancePrefix}Controller"
 
-    context = {filePrefix, serviceClass, serviceInstance, controllerClass, controllerInstance, appName, @githubUrl, @realname}
+    context = {
+      filePrefix
+      serviceClass
+      serviceInstance
+      controllerClass
+      controllerInstance
+      appName
+      fullFilePrefix
+      @githubUrl
+      @realname
+    }
     @template "_package.json", "package.json", context
     @template "src/_server.coffee", "src/server.coffee", context
     @template "src/_router.coffee", "src/router.coffee", context
@@ -74,7 +85,6 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     @template "src/controllers/_controller.coffee", "src/controllers/#{filePrefix}-controller.coffee", context
     @template "test/_mocha.opts", "test/mocha.opts", context
     @template "test/_test_helper.coffee", "test/test_helper.coffee", context
-    @template "test/integration/_sample-integration-spec.coffee", "test/integration/#{filePrefix}-integration-spec.coffee", context
     @template "test/integration/_hello-spec.coffee", "test/integration/#{filePrefix}-hello-spec.coffee", context
     @template "_index.js", "index.js", context
     @template "_command.js", "command.js", context
