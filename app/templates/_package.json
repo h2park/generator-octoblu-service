@@ -2,8 +2,7 @@
   "name": "<%= appName %>",
   "version": "0.0.0",
   "description": "Put some description here",
-  "keywords": [
-  ],
+  "keywords": ["Octoblu", "Service"],
   "homepage": "<%= githubUrl %>/<%= fullFilePrefix %>",
   "bugs": "<%= githubUrl %>/<%= fullFilePrefix %>/issues",
   "author": {
@@ -34,15 +33,15 @@
     "coffee-script": "^1.10.0",
     "cors": "^2.7.1",
     "debug": "^2.2.0",
-    "errorhandler": "^1.4.2",
     "express": "^4.14.0",
     "express-meshblu-healthcheck": "^1.0.1",
     "express-meshblu-auth": "^6.0.0",
     "express-package-version": "^0.0.2",
+    "express-send-error": "^1.1.0",
     "lodash": "^4.13.1",
     "meshblu-config": "^5.1.1",
     "morgan": "^1.6.1",
-    "octoblu-raven": "^2.1.1",
+    "octoblu-raven": "^3.0.1",
     "server-destroy": "^1.0.1"
   },
   "license": "MIT"

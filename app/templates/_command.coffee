@@ -12,7 +12,7 @@ class Command
       octobluRaven:   new OctobluRaven()
 
   handleErrors: =>
-    @serverOptions.octobluRaven.worker().handleErrors()
+    @serverOptions.octobluRaven.patchGlobal()
 
   panic: (error) =>
     console.error error.stack
