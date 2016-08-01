@@ -2,7 +2,6 @@ cors               = require 'cors'
 morgan             = require 'morgan'
 express            = require 'express'
 bodyParser         = require 'body-parser'
-errorHandler       = require 'errorhandler'
 OctobluRaven       = require 'octoblu-raven'
 enableDestroy      = require 'server-destroy'
 sendError          = require 'express-send-error'
@@ -28,7 +27,6 @@ class Server
     app.use packageVersion()
     app.use morgan 'dev', immediate: false unless @disableLogging
     app.use cors()
-    app.use errorHandler()
     app.use bodyParser.urlencoded limit: '1mb', extended : true
     app.use bodyParser.json limit : '1mb'
 
