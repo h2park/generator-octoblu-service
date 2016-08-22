@@ -2,6 +2,7 @@
 
 class Router
   constructor: ({@<%= serviceInstance %>}) ->
+    throw new Error 'Missing <%= serviceInstance %>' unless @<%= serviceInstance %>?
 
   route: (app) =>
     <%= controllerInstance %> = new <%= controllerClass %> {@<%= serviceInstance %>}

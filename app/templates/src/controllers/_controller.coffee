@@ -1,5 +1,6 @@
 class <%= controllerClass %>
   constructor: ({@<%= serviceInstance %>}) ->
+    throw new Error 'Missing <%= serviceInstance %>' unless @<%= serviceInstance %>?
 
   hello: (request, response) =>
     {hasError} = request.query

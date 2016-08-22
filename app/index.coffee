@@ -1,9 +1,11 @@
-util      = require 'util'
-path      = require 'path'
-url       = require 'url'
-GitHubApi = require 'github'
-yeoman    = require 'yeoman-generator'
-_         = require 'lodash'
+_             = require 'lodash'
+util          = require 'util'
+path          = require 'path'
+url           = require 'url'
+GitHubApi     = require 'github'
+latestVersion = require 'latest-version'
+yeoman        = require 'yeoman-generator'
+packageJSON   = require '../package.json'
 
 extractGeneratorName = (__, appname) ->
   _.kebabCase appname
@@ -22,25 +24,40 @@ class OctobluServiceGenerator extends yeoman.generators.Base
 
   askFor: ->
     # have Yeoman greet the user.
-    console.log @yeoman
-
     done = @async()
-    generatorName = extractGeneratorName @_, @appname
+    latestVersion packageJSON.name
+      .catch (error) =>
+        console.error 'unable to retrieve latest version'
+        console.error error.stack
+        process.exit 1
+      .then (version) =>
+        console.log ''
+        if version == packageJSON.version
+          console.log "** using latest version #{version} **"
+          console.log ''
+        else
+          console.log '** this generator version is outofdate **'
+          console.log "** the installed version is #{packageJSON.version} **"
+          console.log "** I need version #{version} **"
+          console.log ''
 
-    prompts = [
-      name: 'githubUser'
-      message: 'Would you mind telling me your username on GitHub?'
-      default: 'octoblu'
-    ,
-      name: 'generatorName'
-      message: 'What\'s the base name of your generator?'
-      default: generatorName
-    ]
+        console.log @yeoman
+        generatorName = extractGeneratorName @_, @appname
 
-    @prompt prompts, (props) =>
-      @githubUser = props.githubUser
-      @generatorName = props.generatorName
-      done()
+        prompts = [
+          name: 'githubUser'
+          message: 'Would you mind telling me your username on GitHub?'
+          default: 'octoblu'
+        ,
+          name: 'generatorName'
+          message: 'What\'s the base name of your generator?'
+          default: generatorName
+        ]
+
+        @prompt prompts, (props) =>
+          @githubUser = props.githubUser
+          @generatorName = props.generatorName
+          done()
 
   userInfo: ->
     return if @realname? and @githubUrl?

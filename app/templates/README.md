@@ -6,7 +6,27 @@
 
 [![NPM](https://nodei.co/npm/<%= appName %>.svg?style=flat)](https://npmjs.org/package/<%= appName %>)
 
-## Installing
+# Table of Contents
+
+* [Introduction](#introduction)
+* [Getting Started](#getting-started)
+  * [Install](#install)
+* [Usage](#usage)
+  * [Default](#default)
+  * [Docker](#docker)
+    * [Development](#development)
+    * [Production](#production)
+  * [Debugging](#debugging)
+  * [Test](#test)
+* [License](#license)
+
+# Introduction
+
+...
+
+# Getting Started
+
+## Install
 
 ```bash
 git clone <%= githubUrl %>/<%= fullFilePrefix %>.git
@@ -14,12 +34,44 @@ cd /path/to/<%= fullFilePrefix %>
 npm install
 ```
 
-### Usage
+# Usage
 
-#### NPM
+## Default
 
 ```javascript
-npm start
+node command.js
+```
+
+## Docker 
+
+### Development
+
+```bash
+docker build -t local/<%= appName %> .
+docker run --rm -it --name <%= appName %>-local -p 8888:80 local/<%= appName %>
+```
+
+### Production
+
+```bash
+docker pull quay.io/octoblu/<%= appName %>
+docker run --rm -p 8888:80 quay.io/octoblu/<%= appName %>
+```
+
+## Debugging
+
+```bash
+env DEBUG='<%= appName %>*' node command.js
+```
+
+```bash
+env DEBUG='<%= appName %>*' node command.js
+```
+
+## Test 
+
+```bash
+npm test
 ```
 
 ## License

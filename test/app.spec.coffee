@@ -20,14 +20,14 @@ describe 'GeneratorOctobluService', ->
 
   it 'creates expected files', ->
     assert.file '''
-      .dockerignore
-      Dockerfile
       src/server.coffee
       src/router.coffee
       src/controllers/app-controller.coffee
       src/services/app-service.coffee
       test/mocha.opts
       test/test_helper.coffee
+      .dockerignore
+      Dockerfile
       .gitignore
       index.js
       command.js

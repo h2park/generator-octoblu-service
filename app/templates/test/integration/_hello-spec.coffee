@@ -1,7 +1,6 @@
-http          = require 'http'
+shmock        = require 'shmock'
 request       = require 'request'
 enableDestroy = require 'server-destroy'
-shmock        = require '@octoblu/shmock'
 Server        = require '../../src/server'
 
 describe 'Hello', ->
@@ -9,11 +8,15 @@ describe 'Hello', ->
     @meshblu = shmock 0xd00d
     enableDestroy @meshblu
 
+    @logFn = sinon.spy()
     serverOptions =
       port: undefined,
       disableLogging: true
+      logFn: @logFn
       meshbluConfig:
-        server: 'localhost'
+        hostname: 'localhost'
+        protocol: 'http'
+        resolveSrv: false
         port: 0xd00d
 
     @server = new Server serverOptions
@@ -33,7 +36,7 @@ describe 'Hello', ->
       @authDevice = @meshblu
         .post '/authenticate'
         .set 'Authorization', "Basic #{userAuth}"
-        .reply 200, uuid: 'some-uuid', token: 'some-token'
+        .reply 204
 
       options =
         uri: '/hello'
@@ -49,7 +52,7 @@ describe 'Hello', ->
     it 'should return a 200', ->
       expect(@response.statusCode).to.equal 200
 
-    it 'should auth handler', ->
+    it 'should auth the request with meshblu', ->
       @authDevice.done()
 
   describe 'when the service yields an error', ->
@@ -59,7 +62,7 @@ describe 'Hello', ->
       @authDevice = @meshblu
         .post '/authenticate'
         .set 'Authorization', "Basic #{userAuth}"
-        .reply 200, uuid: 'some-uuid', token: 'some-token'
+        .reply 204
 
       options =
         uri: '/hello'
@@ -74,6 +77,11 @@ describe 'Hello', ->
       request.get options, (error, @response, @body) =>
         done error
 
+    it 'should log the error', ->
+      expect(@logFn).to.have.been.called
+
     it 'should auth and response with 755', ->
       expect(@response.statusCode).to.equal 755
+
+    it 'should auth the request with meshblu', ->
       @authDevice.done()

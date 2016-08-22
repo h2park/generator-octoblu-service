@@ -5,14 +5,16 @@ Server        = require './src/server'
 
 class Command
   constructor: ->
-    @serverOptions =
+    @octobluRaven  = new OctobluRaven()
+    @serverOptions = {
       meshbluConfig:  new MeshbluConfig().toJSON()
       port:           process.env.PORT || 80
       disableLogging: process.env.DISABLE_LOGGING == "true"
-      octobluRaven:   new OctobluRaven()
+      @octobluRaven,
+    }
 
   handleErrors: =>
-    @serverOptions.octobluRaven.patchGlobal()
+    @octobluRaven.patchGlobal()
 
   panic: (error) =>
     console.error error.stack
@@ -21,6 +23,8 @@ class Command
   run: =>
     # Use this to require env
     # @panic new Error('Missing required environment variable: ENV_NAME') if _.isEmpty @serverOptions.envName
+    @panic new Error('Missing meshbluConfig') if _.isEmpty @serverOptions.meshbluConfig
+    @panic new Error('Missing port') if _.isEmpty @serverOptions.port
 
     server = new Server @serverOptions
     server.run (error) =>
@@ -31,6 +35,7 @@ class Command
 
     process.on 'SIGTERM', =>
       console.log 'SIGTERM caught, exiting'
+      process.exit 0 unless server.stop?
       server.stop =>
         process.exit 0
 
