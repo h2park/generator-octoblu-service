@@ -80,8 +80,8 @@ describe 'Hello', ->
     it 'should log the error', ->
       expect(@logFn).to.have.been.called
 
-    it 'should auth and response with 755', ->
-      expect(@response.statusCode).to.equal 755
+    it 'should auth and response with 500', ->
+      expect(@response.statusCode).to.equal 500
 
     it 'should auth the request with meshblu', ->
       @authDevice.done()
