@@ -41,7 +41,8 @@
     "express-meshblu-auth": "^7.0.0",
     "lodash": "^4.15.0",
     "meshblu-config": "^6.0.0",
-    "server-destroy": "^1.0.1"
+    "server-destroy": "^1.0.1",
+    "sigterm-handler": "^2.0.0"
   },
   "license": "MIT",
   "nyc": {

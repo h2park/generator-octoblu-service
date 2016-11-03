@@ -1,6 +1,7 @@
-_             = require 'lodash'
-MeshbluConfig = require 'meshblu-config'
-Server        = require './src/server'
+_              = require 'lodash'
+MeshbluConfig  = require 'meshblu-config'
+SigtermHandler = require 'sigterm-handler'
+Server         = require './src/server'
 
 class Command
   constructor: ->
@@ -26,11 +27,8 @@ class Command
       {address,port} = server.address()
       console.log "<%= serviceClass %> listening on port: #{port}"
 
-    process.on 'SIGTERM', =>
-      console.log 'SIGTERM caught, exiting'
-      return process.exit 0 unless server?.stop?
-      server.stop =>
-        process.exit 0
+    sigtermHandler = new SigtermHandler()
+    sigtermHandler.handle server.stop
 
 command = new Command()
 command.run()
