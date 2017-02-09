@@ -27,6 +27,6 @@ build/Release
 node_modules
 
 meshblu.json
-
 dpl_*
 .nyc_ouput
+.env

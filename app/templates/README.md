@@ -42,7 +42,7 @@ npm install
 node command.js
 ```
 
-## Docker 
+## Docker
 
 ### Development
 
@@ -68,7 +68,7 @@ env DEBUG='<%= appName %>*' node command.js
 env DEBUG='<%= appName %>*' node command.js
 ```
 
-## Test 
+## Test
 
 ```bash
 npm test
@@ -76,9 +76,9 @@ npm test
 
 ## License
 
-The MIT License (MIT)
+MIT License
 
-Copyright (c) 2016 Octoblu
+Copyright (c) 2017 Octoblu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,14 +1,18 @@
 _              = require 'lodash'
+envalid        = require 'envalid'
 MeshbluConfig  = require 'meshblu-config'
 SigtermHandler = require 'sigterm-handler'
 Server         = require './src/server'
 
+envConfig =
+  PORT: envalid.num({ port: 80 })
+
 class Command
   constructor: ->
+    env = envalid.cleanEnv envConfig
     @serverOptions = {
       meshbluConfig:  new MeshbluConfig().toJSON()
-      port:           process.env.PORT || 80
-      disableLogging: process.env.DISABLE_LOGGING == "true"
+      port: env.PORT
     }
 
   panic: (error) =>
@@ -16,19 +20,17 @@ class Command
     process.exit 1
 
   run: =>
-    # Use this to require env
-    # @panic new Error('Missing required environment variable: ENV_NAME') if _.isEmpty @serverOptions.envName
     @panic new Error('Missing meshbluConfig') if _.isEmpty @serverOptions.meshbluConfig
 
     server = new Server @serverOptions
     server.run (error) =>
       return @panic error if error?
 
-      {address,port} = server.address()
+      {port} = server.address()
       console.log "<%= serviceClass %> listening on port: #{port}"
 
     sigtermHandler = new SigtermHandler()
-    sigtermHandler.handle server.stop
+    sigtermHandler.register server.stop
 
 command = new Command()
 command.run()
