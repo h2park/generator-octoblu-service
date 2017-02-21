@@ -30,7 +30,7 @@
     "mocha-osx-reporter": "^0.1.2",
     "nyc": "^10.1.2",
     "request": "^2.74.0",
-    "shmock": "^0.8.1",
+    "@octoblu/shmock": "^0.9.1",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0"
   },

@@ -1,11 +1,11 @@
 class <%= serviceClass %>
-  doHello: ({hasError}, callback) =>
-    return callback @_createError(500, 'Not enough dancing!') if hasError?
+  doHello: ({ hasError }, callback) =>
+    return callback @_createError('Not enough dancing!') if hasError?
     callback()
 
-  _createError: (code, message) =>
+  _createError: (message='Internal Service Error', code=500) =>
     error = new Error message
-    error.code = code if code?
+    error.code = code
     return error
 
 module.exports = <%= serviceClass %>

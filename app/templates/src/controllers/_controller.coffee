@@ -3,8 +3,8 @@ class <%= controllerClass %>
     throw new Error 'Missing <%= serviceInstance %>' unless @<%= serviceInstance %>?
 
   hello: (request, response) =>
-    {hasError} = request.query
-    @<%= serviceInstance %>.doHello {hasError}, (error) =>
+    { hasError } = request.query
+    @<%= serviceInstance %>.doHello { hasError }, (error) =>
       return response.sendError(error) if error?
       response.sendStatus(200)
 

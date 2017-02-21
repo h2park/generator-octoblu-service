@@ -1,7 +1,7 @@
 {beforeEach, afterEach, describe, it} = global
 {expect}      = require 'chai'
 sinon         = require 'sinon'
-shmock        = require 'shmock'
+shmock        = require '@octoblu/shmock'
 request       = require 'request'
 enableDestroy = require 'server-destroy'
 Server        = require '../../src/server'

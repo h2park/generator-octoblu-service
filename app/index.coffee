@@ -1,7 +1,5 @@
 _             = require 'lodash'
-util          = require 'util'
 path          = require 'path'
-url           = require 'url'
 GitHubApi     = require 'github'
 latestVersion = require 'latest-version'
 yeoman        = require 'yeoman-generator'
@@ -15,11 +13,10 @@ githubUserInfo = (name, cb) ->
   github.user.getFrom user: name, cb
 
 class OctobluServiceGenerator extends yeoman.generators.Base
-  constructor: (args, options, config) ->
+  constructor: (args, options) ->
     super
     @currentYear = (new Date()).getFullYear()
     {@realname, @githubUrl} = options
-    @on 'end', => @installDependencies skipInstall: options['skip-install']
     @pkg = JSON.parse @readFileAsString path.join __dirname, '../package.json'
 
   askFor: ->
@@ -102,7 +99,7 @@ class OctobluServiceGenerator extends yeoman.generators.Base
     @template "src/controllers/_controller.coffee", "src/controllers/#{filePrefix}-controller.coffee", context
     @template "test/_mocha.opts", "test/mocha.opts", context
     @template "test/_test_helper.coffee", "test/test_helper.coffee", context
-    @template "test/integration/_hello-spec.coffee", "test/integration/#{filePrefix}-hello-spec.coffee", context
+    @template "test/integration/_hello-spec.coffee", "test/integration/hello-spec.coffee", context
     @template "_index.js", "index.js", context
     @template "_command.js", "command.js", context
     @template "_command.coffee", "command.coffee", context

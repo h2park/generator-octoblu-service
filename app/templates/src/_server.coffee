@@ -3,10 +3,11 @@ octobluExpress     = require 'express-octoblu'
 MeshbluAuth        = require 'express-meshblu-auth'
 Router             = require './router'
 <%= serviceClass %> = require './services/<%= filePrefix %>-service'
-debug              = require('debug')('<%= appName %>:server')
 
 class Server
-  constructor: ({@logFn, @disableLogging, @port, @meshbluConfig})->
+  constructor: (options) ->
+    { @logFn, @disableLogging, @port } = options
+    { @meshbluConfig } = options
     throw new Error 'Missing meshbluConfig' unless @meshbluConfig?
 
   address: =>
